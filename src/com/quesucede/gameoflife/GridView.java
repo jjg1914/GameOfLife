@@ -54,8 +54,14 @@ public class GridView extends View {
 		Paint background = new Paint();
 		background.setColor(getResources().getColor(R.color.background));
 
-		Paint cell = new Paint();
-		cell.setColor(getResources().getColor(R.color.cell));
+        Paint cell_default = new Paint();
+		cell_default.setColor(getResources().getColor(R.color.cell_default));
+		Paint cell_low = new Paint();
+		cell_low.setColor(getResources().getColor(R.color.cell_low));
+		Paint cell_medium = new Paint();
+		cell_medium.setColor(getResources().getColor(R.color.cell_medium));
+		Paint cell_high = new Paint();
+		cell_high.setColor(getResources().getColor(R.color.cell_high));
 
 		// draw background
 		canvas.drawRect(0, 0, getWidth(), getHeight(), background);
@@ -63,6 +69,17 @@ public class GridView extends View {
 		// draw cells
 		for (int h = 0; h < Life.HEIGHT; h++) {
 			for (int w = 0; w < Life.WIDTH; w++) {
+                Paint cell;
+                int n = Life.calculateNeighbours( h, w );
+                if ( !PreferencesActivity.ENABLE_COLOR_CODING ) {
+                    cell = cell_default;
+                } else if ( n > 6 ) {
+                    cell = cell_high;
+                } else if ( n > 3 ) {
+                    cell = cell_medium;
+                } else {
+                    cell = cell_low;
+                }
 				if (Life.getGrid()[h][w] != 0) {
 					canvas.drawRect(
 						w * Life.CELL_SIZE, 

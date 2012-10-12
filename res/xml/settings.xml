@@ -23,6 +23,7 @@
 		android:entryValues="@array/animation_speed_values"
 		android:dialogTitle="Animation speed" android:defaultValue="3" />
 	<CheckBoxPreference android:key="COLOR_CODING"
-		android:title="@string/color_coding_title" android:summary="@string/color_coding_summary"
+        android:title="@string/color_coding_title"
+        android:summary="@string/color_coding_summary"
 		android:defaultValue="false" />
 </PreferenceScreen>

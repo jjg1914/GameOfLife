@@ -21,6 +21,19 @@ public class Life {
 		return _lifeGrid;
 	}
 
+    public static int calculateNeighbours(int y, int x) {
+		int total = (_lifeGrid[y][x] != 0) ? -1 : 0;
+		for (int h = -1; h <= +1; h++) {
+			for (int w = -1; w <= +1; w++) {
+				if (_lifeGrid[(HEIGHT + (y + h)) % HEIGHT][(WIDTH + (x + w))
+						% WIDTH] != 0) {
+					total++;
+				}
+			}
+		}
+		return total;
+    }
+
 	public void initializeGrid() {
 		resetGrid(_lifeGrid);
 
@@ -68,19 +81,6 @@ public class Life {
 				grid[h][w] = 0;
 			}
 		}
-	}
-
-	private int calculateNeighbours(int y, int x) {
-		int total = (_lifeGrid[y][x] != 0) ? -1 : 0;
-		for (int h = -1; h <= +1; h++) {
-			for (int w = -1; w <= +1; w++) {
-				if (_lifeGrid[(HEIGHT + (y + h)) % HEIGHT][(WIDTH + (x + w))
-						% WIDTH] != 0) {
-					total++;
-				}
-			}
-		}
-		return total;
 	}
 
 	private void copyGrid(int[][] source, int[][] destination) {

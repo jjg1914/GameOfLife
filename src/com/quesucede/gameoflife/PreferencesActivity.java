@@ -2,6 +2,8 @@ package com.quesucede.gameoflife;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
+import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 
@@ -15,11 +17,31 @@ public class PreferencesActivity extends PreferenceActivity {
 	private static final String OPTION_SPAWN_DEFAULT = "3";
 	private static final String OPTION_ANIMATION_SPEED = "ANIMATION_SPEED_VARIABLE";
 	private static final String OPTION_ANIMATION_SPEED_DEFAULT = "3";
+
+    private CheckBoxPreference colorCoding;
+
+    public static boolean ENABLE_COLOR_CODING = false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.settings);
+
+        colorCoding = (CheckBoxPreference)
+                       getPreferenceManager().findPreference( "COLOR_CODING" );
+        colorCoding.setOnPreferenceChangeListener(
+            new Preference.OnPreferenceChangeListener() {
+                public boolean onPreferenceChange( Preference preference,
+                                                            Object newValue ) {
+                    if ( newValue.toString().equals( "true" ) ) {
+                        PreferencesActivity.ENABLE_COLOR_CODING = true;
+                    } else {
+                        PreferencesActivity.ENABLE_COLOR_CODING = false;
+                    }
+                    return true;
+                }
+            }
+        );
 	}
 	
 	public static String getMinimumVariable(Context context) {
