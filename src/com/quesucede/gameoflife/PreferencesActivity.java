@@ -3,6 +3,7 @@ package com.quesucede.gameoflife;
 import android.content.Context;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
@@ -20,7 +21,11 @@ public class PreferencesActivity extends PreferenceActivity {
 
     private CheckBoxPreference colorCoding;
 
+    private ListPreference animationSpeedVariable;
+
     public static boolean ENABLE_COLOR_CODING = false;
+
+    public static long MOVE_DELAY = 250;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +42,30 @@ public class PreferencesActivity extends PreferenceActivity {
                         PreferencesActivity.ENABLE_COLOR_CODING = true;
                     } else {
                         PreferencesActivity.ENABLE_COLOR_CODING = false;
+                    }
+                    return true;
+                }
+            }
+        );
+
+        animationSpeedVariable = (ListPreference)
+           getPreferenceManager().findPreference( "ANIMATION_SPEED_VARIABLE" );
+        animationSpeedVariable.setOnPreferenceChangeListener(
+            new Preference.OnPreferenceChangeListener() {
+                public boolean onPreferenceChange( Preference preference,
+                                                            Object newValue ) {
+                    String s = newValue.toString();
+
+                    if ( s.equals( "5" ) ) {
+                        MOVE_DELAY = 1000;
+                    } else if ( s.equals( "4" ) ) {
+                        MOVE_DELAY = 500;
+                    } else if ( s.equals( "2" ) ) {
+                        MOVE_DELAY = 100;
+                    } else if ( s.equals( "1" ) ) {
+                        MOVE_DELAY = 50;
+                    } else {
+                        MOVE_DELAY = 250;
                     }
                     return true;
                 }

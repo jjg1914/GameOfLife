@@ -15,8 +15,6 @@ public class GridView extends View {
 	
 	private Life _life;
 	
-	private long _moveDelay = 250;
-	
 	private RefreshHandler _redrawHandler = new RefreshHandler();
 
     class RefreshHandler extends Handler {
@@ -94,7 +92,7 @@ public class GridView extends View {
 	
 	private void update() {
 		_life.generateNextGeneration();
-		_redrawHandler.sleep(_moveDelay);
+		_redrawHandler.sleep(PreferencesActivity.MOVE_DELAY);
 	}
 	
 	private void initNewGame() {
